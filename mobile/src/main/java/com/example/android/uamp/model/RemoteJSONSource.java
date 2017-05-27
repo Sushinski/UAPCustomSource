@@ -111,6 +111,7 @@ public class RemoteJSONSource implements MusicProviderSource {
                 .putString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE, source)
                 .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, album)
                 .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, artist)
+                .putString(MediaMetadataCompat.METADATA_KEY_COMPILATION, "Unknown")
                 .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, duration)
                 .putString(MediaMetadataCompat.METADATA_KEY_GENRE, genre)
                 .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, iconUrl)

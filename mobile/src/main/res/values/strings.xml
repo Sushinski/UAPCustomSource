@@ -51,4 +51,7 @@
     <string name="no_search_results">No search results.</string>
     <string name="loading">Loading…</string>
     <string name="media_route_menu_title">Play on…</string>
+    <string name="browse_musics_by_compilation_subtitle">%1$s playlist</string>
+    <string name="browse_playlists">Playlists</string>
+    <string name="browse_playlists_subtitle">Songs by playlist</string>
 </resources>
