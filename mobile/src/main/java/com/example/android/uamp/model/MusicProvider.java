@@ -71,7 +71,7 @@ public class MusicProvider {
     }
 
     public MusicProvider() {
-        this(new RemoteJSONSource());
+        this(new CustomAudioSource());
     }
     public MusicProvider(MusicProviderSource source) {
         mSource = source;
@@ -342,9 +342,8 @@ public class MusicProvider {
         }
 
         if (MEDIA_ID_ROOT.equals(mediaId)) {
-            mediaItems.add(createBrowsableMediaItemForRoot(resources));
-            // todo add genres root item
-
+            mediaItems.add(createBrowsableMediaItemForGenreRoot(resources));
+            mediaItems.add(createBrowsableMediaItemForCompRoot(resources));
         } else if (MEDIA_ID_MUSICS_BY_GENRE.equals(mediaId)) {
             for (String genre : getGenres()) {
                 mediaItems.add(createBrowsableMediaItemForGenre(genre, resources));
@@ -374,11 +373,23 @@ public class MusicProvider {
     }
 
     // todo: browsable root for playlists and genres
-    private MediaBrowserCompat.MediaItem createBrowsableMediaItemForRoot(Resources resources) {
+    private MediaBrowserCompat.MediaItem createBrowsableMediaItemForCompRoot(Resources resources) {
         MediaDescriptionCompat description = new MediaDescriptionCompat.Builder()
                 .setMediaId(MEDIA_ID_MUSIC_BY_COMPILATION)
                 .setTitle(resources.getString(R.string.browse_playlists))
                 .setSubtitle(resources.getString(R.string.browse_playlists_subtitle))
+                .setIconUri(Uri.parse("android.resource://" +
+                        "com.example.android.uamp/drawable/ic_by_genre"))
+                .build();
+        return new MediaBrowserCompat.MediaItem(description,
+                MediaBrowserCompat.MediaItem.FLAG_BROWSABLE);
+    }
+
+    private MediaBrowserCompat.MediaItem createBrowsableMediaItemForGenreRoot(Resources resources) {
+        MediaDescriptionCompat description = new MediaDescriptionCompat.Builder()
+                .setMediaId(MEDIA_ID_MUSICS_BY_GENRE)
+                .setTitle(resources.getString(R.string.browse_genres))
+                .setSubtitle(resources.getString(R.string.browse_genre_subtitle))
                 .setIconUri(Uri.parse("android.resource://" +
                         "com.example.android.uamp/drawable/ic_by_genre"))
                 .build();

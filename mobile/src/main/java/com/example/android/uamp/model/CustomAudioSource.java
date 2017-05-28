@@ -42,8 +42,8 @@ public class CustomAudioSource extends AudioSource implements MusicProviderSourc
         return new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, String.valueOf(song.getId()))
                 .putString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE, song.getSource())
-                .putString(MediaMetadataCompat.METADATA_KEY_GENRE, UNKNOWN)
-                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, UNKNOWN)
+                .putString(MediaMetadataCompat.METADATA_KEY_GENRE, UNKNOWN) // todo fill genre
+                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, UNKNOWN) // todo fill album
                 .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, 0) // todo track duration
                 .putString(MediaMetadataCompat.METADATA_KEY_COMPILATION, playlist_name )
                 .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER, track_number)
