@@ -34,6 +34,9 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.media.MediaRouter;
 
+import com.example.android.uamp.di.DaggerIDaggerMusicProviderComponent;
+import com.example.android.uamp.di.DaggerMusicProviderModule;
+import com.example.android.uamp.di.IDaggerMusicProviderComponent;
 import com.example.android.uamp.model.MusicProvider;
 import com.example.android.uamp.playback.CastPlayback;
 import com.example.android.uamp.playback.LocalPlayback;
@@ -55,6 +58,8 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_EMPTY_ROOT;
 import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_ROOT;
@@ -137,7 +142,11 @@ public class MusicService extends MediaBrowserServiceCompat implements
     // Delay stopSelf by using a handler.
     private static final int STOP_DELAY = 30000;
 
-    private MusicProvider mMusicProvider;
+    IDaggerMusicProviderComponent mProviderComponent;
+
+    @Inject
+    MusicProvider mMusicProvider;
+
     private PlaybackManager mPlaybackManager;
 
     private MediaSessionCompat mSession;
@@ -160,9 +169,10 @@ public class MusicService extends MediaBrowserServiceCompat implements
     public void onCreate() {
         super.onCreate();
         LogHelper.d(TAG, "onCreate");
+        mProviderComponent = DaggerIDaggerMusicProviderComponent.builder().
+                daggerMusicProviderModule( new DaggerMusicProviderModule()).build();
 
-        mMusicProvider = new MusicProvider();
-
+        mProviderComponent.inject(this);
         // To make the app more responsive, fetch and cache catalog information now.
         // This can help improve the response time in the method
         // {@link #onLoadChildren(String, Result<List<MediaItem>>) onLoadChildren()}.

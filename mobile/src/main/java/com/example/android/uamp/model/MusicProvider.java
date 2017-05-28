@@ -25,7 +25,6 @@ import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 
 import com.example.android.uamp.R;
-import com.example.android.uamp.playback.QueueManager;
 import com.example.android.uamp.utils.LogHelper;
 import com.example.android.uamp.utils.MediaIDHelper;
 
@@ -37,6 +36,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import javax.inject.Inject;
 
 import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_MUSICS_BY_GENRE;
 import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_MUSIC_BY_COMPILATION;
@@ -50,7 +51,6 @@ import static com.example.android.uamp.utils.MediaIDHelper.createMediaID;
 public class MusicProvider {
 
     private static final String TAG = LogHelper.makeLogTag(MusicProvider.class);
-
     private MusicProviderSource mSource;
 
     // Categorized caches for music track data:
@@ -70,9 +70,7 @@ public class MusicProvider {
         void onMusicCatalogReady(boolean success);
     }
 
-    public MusicProvider() {
-        this(new CustomAudioSource());
-    }
+    @Inject
     public MusicProvider(MusicProviderSource source) {
         mSource = source;
         mMusicListByGenre = new ConcurrentHashMap<>();
