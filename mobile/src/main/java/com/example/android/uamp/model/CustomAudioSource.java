@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
+/**
+ * Utility class for use provided AudioSource as tracks/platlists information source
+ */
 public class CustomAudioSource extends AudioSource implements MusicProviderSource {
     private final static String UNKNOWN = "Unknown";
 
@@ -34,6 +36,16 @@ public class CustomAudioSource extends AudioSource implements MusicProviderSourc
         return tracks.iterator();
     }
 
+    /**
+     * Constructs track metadata for using with MusicProvider. AudiSource doesn`t have enough fields
+     * so use placeholder instead. For playlist name use compilation name, it allowes to utilize
+     * custom searching hierarchy then
+     * @param song Objects which keeps track info
+     * @param playlist_name Name of the playlist
+     * @param track_number Current track number
+     * @param total_tracks Total tracks in playlist
+     * @return Track metadata object
+     */
     private MediaMetadataCompat buildFromSongSource(Song song,
                                                     String playlist_name,
                                                     long track_number,

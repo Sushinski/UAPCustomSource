@@ -36,9 +36,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
 import javax.inject.Inject;
-
 import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_MUSICS_BY_GENRE;
 import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_MUSIC_BY_COMPILATION;
 import static com.example.android.uamp.utils.MediaIDHelper.MEDIA_ID_ROOT;
@@ -124,7 +122,11 @@ public class MusicProvider {
         return mMusicListByGenre.get(genre);
     }
 
-
+    /**
+     * Gets track by a given compilation(playlist)
+     * @param compilation
+     * @return Iterabe over metadatas list
+     */
     public Iterable<MediaMetadataCompat> getMusicsByCompilation(String compilation) {
         if (mCurrentState != State.INITIALIZED ||
                 !mMusicListByCompilation.containsKey(compilation)) {
@@ -287,8 +289,10 @@ public class MusicProvider {
         mMusicListByGenre = newMusicListByGenre;
     }
 
-
-    private synchronized void buildListsByCompilation() { // todo: generify methods
+    /**
+     * Builds music cache for track`s compilation
+     */
+    private synchronized void buildListsByCompilation() {
         ConcurrentMap<String, List<MediaMetadataCompat>> newMusicListByCompilation
                 = new ConcurrentHashMap<>();
 
@@ -338,7 +342,7 @@ public class MusicProvider {
         if (!MediaIDHelper.isBrowseable(mediaId)) {
             return mediaItems;
         }
-
+        // Now using two root browsable category
         if (MEDIA_ID_ROOT.equals(mediaId)) {
             mediaItems.add(createBrowsableMediaItemForGenreRoot(resources));
             mediaItems.add(createBrowsableMediaItemForCompRoot(resources));
@@ -370,7 +374,11 @@ public class MusicProvider {
         return mediaItems;
     }
 
-    // todo: browsable root for playlists and genres
+    /**
+     * Creates root media item for browse by track`s compilation(playlist)
+     * @param resources Resources to get icon from
+     * @return Browsable media item
+     */
     private MediaBrowserCompat.MediaItem createBrowsableMediaItemForCompRoot(Resources resources) {
         MediaDescriptionCompat description = new MediaDescriptionCompat.Builder()
                 .setMediaId(MEDIA_ID_MUSIC_BY_COMPILATION)
@@ -383,6 +391,11 @@ public class MusicProvider {
                 MediaBrowserCompat.MediaItem.FLAG_BROWSABLE);
     }
 
+    /**
+     * Creates root media item for browse by track`s genre
+     * @param resources Resources to get icon from
+     * @return Browsable media item
+     */
     private MediaBrowserCompat.MediaItem createBrowsableMediaItemForGenreRoot(Resources resources) {
         MediaDescriptionCompat description = new MediaDescriptionCompat.Builder()
                 .setMediaId(MEDIA_ID_MUSICS_BY_GENRE)
@@ -407,6 +420,11 @@ public class MusicProvider {
                 MediaBrowserCompat.MediaItem.FLAG_BROWSABLE);
     }
 
+    /**
+     * Creates media item for browse by track`s compilation(playlist)(utilies track info)
+     * @param resources Resources to get icon from
+     * @return Browsable media item
+     */
     private MediaBrowserCompat.MediaItem createBrowsableMediaItemForCompilation(String compilation,
                                                                           Resources resources) {
         MediaDescriptionCompat description = new MediaDescriptionCompat.Builder()

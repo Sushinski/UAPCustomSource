@@ -171,7 +171,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
         LogHelper.d(TAG, "onCreate");
         mProviderComponent = DaggerIDaggerMusicProviderComponent.builder().
                 daggerMusicProviderModule( new DaggerMusicProviderModule()).build();
-
+        // inject service dependencies
         mProviderComponent.inject(this);
         // To make the app more responsive, fetch and cache catalog information now.
         // This can help improve the response time in the method
