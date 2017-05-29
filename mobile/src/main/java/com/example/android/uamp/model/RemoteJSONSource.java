@@ -32,11 +32,18 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.inject.Inject;
+
 /**
  * Utility class to get a list of MusicTrack's based on a server-side JSON
  * configuration.
  */
 public class RemoteJSONSource implements MusicProviderSource {
+
+    @Inject
+    public RemoteJSONSource(){
+
+    }
 
     private static final String TAG = LogHelper.makeLogTag(RemoteJSONSource.class);
 
